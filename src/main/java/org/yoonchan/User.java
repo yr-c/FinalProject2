@@ -1,4 +1,5 @@
 package org.yoonchan;
 
-public class User {
+public abstract class User {
+
 }
