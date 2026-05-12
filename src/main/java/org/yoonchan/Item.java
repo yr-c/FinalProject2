@@ -1,12 +1,20 @@
 package org.yoonchan;
 
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
+@Getter
+@ToString
 public abstract class Item {
     protected String id;
-    protected String title;
-    protected Status status;
+    @Setter protected String title;
+    @Setter protected Status status;
+
+    public Item(String id, String title) {
+        this.id = id;
+        this.title = title;
+        this.status = Status.AVAILABLE;
+    }
 
     public enum Status {
         BORROWED, AVAILABLE, LOST
