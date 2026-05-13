@@ -1,7 +1,7 @@
 package org.yoonchan.roles;
 
 import org.yoonchan.CSVPersister;
-import org.yoonchan.Item;
+import org.yoonchan.entities.Item;
 import org.yoonchan.Reporter;
 
 import java.util.List;

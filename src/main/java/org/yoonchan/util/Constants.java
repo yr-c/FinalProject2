@@ -1,4 +1,4 @@
-package org.yoonchan;
+package org.yoonchan.util;
 
 public class Constants {
     public static final int MAX_BOOKS_STUDENT = 5;

@@ -1,6 +1,6 @@
 package org.yoonchan.roles;
 
-import org.yoonchan.Item;
+import org.yoonchan.entities.Item;
 
 import java.util.List;
 
