@@ -14,7 +14,7 @@ public class ItemUtil {
      * @param code The input code String.
      * @return Whether the ISBN is valid.
      */
-    public static boolean isISBNValid(String code) {
+    public static boolean isIsbnValid(String code) {
         if (code == null) throw new NullPointerException("Input ISBN code is null.");
 
         int standardCodeLenWithoutDashes = 13;
