@@ -1,4 +1,6 @@
-package org.yoonchan;
+package org.yoonchan.roles;
+
+import org.yoonchan.Item;
 
 import java.util.List;
 

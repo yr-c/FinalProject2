@@ -1,6 +1,7 @@
-package org.yoonchan;
+package org.yoonchan.roles;
 
 import lombok.AllArgsConstructor;
+import org.yoonchan.Item;
 
 import java.util.ArrayList;
 import java.util.List;

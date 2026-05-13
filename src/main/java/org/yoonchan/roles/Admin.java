@@ -1,8 +1,12 @@
-package org.yoonchan;
+package org.yoonchan.roles;
+
+import org.yoonchan.CSVPersister;
+import org.yoonchan.Item;
+import org.yoonchan.Reporter;
 
 import java.util.List;
 
-public class Admin extends User implements Reporter {
+public class Admin extends User implements Reporter, CSVPersister {
     private static int nextId = 1;
 
     // For CSV functionality
