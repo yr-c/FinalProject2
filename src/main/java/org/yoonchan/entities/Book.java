@@ -11,21 +11,21 @@ import lombok.ToString;
 @Setter
 public class Book extends Item {
     @Setter private static int nextId = 1;
-    private String ISBN;
+    private String isbn;
     private String author;
     private String genre;
 
     // For CSV functionality
-    public Book(String id, String title, Status status, String ISBN, String author, String genre) {
+    public Book(String id, String title, Status status, String isbn, String author, String genre) {
         super(id, title, status);
-        this.ISBN = ISBN;
+        this.isbn = isbn;
         this.author = author;
         this.genre = genre;
     }
 
-    public Book(String title, String ISBN, String author, String genre) {
+    public Book(String title, String isbn, String author, String genre) {
         super(String.format("B%07d", nextId++), title);
-        this.ISBN = ISBN;
+        this.isbn = isbn;
         this.author = author;
         this.genre = genre;
     }
