@@ -1,16 +1,19 @@
 package org.yoonchan.roles;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.yoonchan.entities.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
+@Getter
 public abstract class User {
     protected String id;
-    protected String name;
-    protected List<Item> borrowedItems;
+    @Setter protected String name;
+    @Setter protected List<Item> borrowedItems;
 
     public User(String id, String name) {
         this.id = id;
