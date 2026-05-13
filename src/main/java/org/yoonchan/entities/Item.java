@@ -1,4 +1,4 @@
-package org.yoonchan;
+package org.yoonchan.entities;
 
 import lombok.*;
 
