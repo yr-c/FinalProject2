@@ -14,8 +14,10 @@ public class Magazine extends Item {
     @Setter private int durationMins;
 
     // For CSV functionality
-    public Magazine(String id, String title, Status status) {
+    public Magazine(String id, String title, Status status, String director, int durationMins) {
         super(id, title, status);
+        this.director = director;
+        this.durationMins = durationMins;
     }
 
     public Magazine(String title) {

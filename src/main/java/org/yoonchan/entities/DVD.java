@@ -14,8 +14,10 @@ public class DVD extends Item {
     @Setter private int issueNumber;
 
     // For CSV functionality
-    public DVD(String id, String title, Status status) {
+    public DVD(String id, String title, Status status, String publisher, int issueNumber) {
         super(id, title, status);
+        this.publisher = publisher;
+        this.issueNumber = issueNumber;
     }
 
     public DVD(String title) {
