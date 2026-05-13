@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.yoonchan.ItemUtil;
+import org.yoonchan.util.ItemUtil;
 
 public class ItemUtilTest {
     @Test
