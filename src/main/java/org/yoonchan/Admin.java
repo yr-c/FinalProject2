@@ -2,7 +2,7 @@ package org.yoonchan;
 
 import java.util.List;
 
-public class Admin extends User implements Reportable {
+public class Admin extends User implements Reporter {
     private static int nextId = 1;
 
     // For CSV functionality

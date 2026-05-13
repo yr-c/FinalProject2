@@ -1,5 +1,5 @@
 package org.yoonchan;
 
-public interface Reportable {
+public interface Reporter {
     void generateReport();
 }
