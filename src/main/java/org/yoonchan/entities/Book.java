@@ -8,11 +8,12 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @Getter
 @ToString
+@Setter
 public class Book extends Item {
-    private static int nextId = 1;
-    @Setter private String ISBN;
-    @Setter private String author;
-    @Setter private String genre;
+    @Setter private static int nextId = 1;
+    private String ISBN;
+    private String author;
+    private String genre;
 
     // For CSV functionality
     public Book(String id, String title, Status status, String ISBN, String author, String genre) {
@@ -23,7 +24,7 @@ public class Book extends Item {
     }
 
     public Book(String title, String ISBN, String author, String genre) {
-        super(String.format("B%04d", nextId++), title);
+        super(String.format("B%07d", nextId++), title);
         this.ISBN = ISBN;
         this.author = author;
         this.genre = genre;

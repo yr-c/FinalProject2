@@ -8,10 +8,11 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @Getter
 @ToString
+@Setter
 public class Magazine extends Item {
-    private static int nextId = 1;
-    @Setter private String director;
-    @Setter private int durationMins;
+    @Setter private static int nextId = 1;
+    private String director;
+    private int durationMins;
 
     // For CSV functionality
     public Magazine(String id, String title, Status status, String director, int durationMins) {
@@ -21,6 +22,6 @@ public class Magazine extends Item {
     }
 
     public Magazine(String title) {
-        super(String.format("M%04d", nextId++), title);
+        super(String.format("M%07d", nextId++), title);
     }
 }
