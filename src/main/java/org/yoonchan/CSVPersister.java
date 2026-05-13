@@ -8,7 +8,7 @@ public interface CSVPersister {
      * the CSV files {@code items.csv} and {@code users.csv}. Invokes both
      * loadItemsFromCSV and loadUsersFromCSV methods.
      */
-    static void loadAllFromCSV() {
+    default void loadAllFromCSV() {
         loadItemsFromCSV();
         loadUsersFromCSV();
     }
@@ -17,7 +17,7 @@ public interface CSVPersister {
      * Initializes items into the Library's itemCatalogue from
      * the CSV file {@code items.csv}.
      */
-    static void loadItemsFromCSV() {
+    default void loadItemsFromCSV() {
         File file = new File(Constants.ITEMS_CSV_PATH);
 
     }
@@ -26,7 +26,7 @@ public interface CSVPersister {
      * Initializes users into the Library's itemCatalogue from
      * the CSV file {@code users.csv}.
      */
-    static void loadUsersFromCSV() {
+    default void loadUsersFromCSV() {
         File file = new File(Constants.USERS_CSV_PATH);
 
 
@@ -37,7 +37,7 @@ public interface CSVPersister {
      * the Library's itemCatalogue. Invokes both
      * saveItemsToCSV and saveUsersToCSV methods.
      */
-    static void saveAllToCSV() {
+    default void saveAllToCSV() {
         saveUsersToCSV();
         saveItemsToCSV();
     }
@@ -46,7 +46,7 @@ public interface CSVPersister {
      * Saves items from the Library's itemCatalogue to
      * the CSV file {@code items.csv}.
      */
-    static void saveItemsToCSV() {
+    default void saveItemsToCSV() {
         File file = new File(Constants.ITEMS_CSV_PATH);
 
     }
@@ -55,7 +55,7 @@ public interface CSVPersister {
      * Saves users from the Library's itemCatalogue to
      * the CSV file {@code users.csv}.
      */
-    static void saveUsersToCSV() {
+    default void saveUsersToCSV() {
         File file = new File(Constants.USERS_CSV_PATH);
 
     }
