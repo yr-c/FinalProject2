@@ -3,6 +3,7 @@ package org.yoonchan.entities;
 import lombok.*;
 
 @AllArgsConstructor
+@EqualsAndHashCode
 @Getter
 @ToString
 public abstract class Item {

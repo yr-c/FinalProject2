@@ -1,15 +1,15 @@
 package org.yoonchan.roles;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.yoonchan.entities.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
+@EqualsAndHashCode
 @Getter
+@ToString
 public abstract class User {
     protected String id;
     @Setter protected String name;

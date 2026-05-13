@@ -1,13 +1,18 @@
 package org.yoonchan.roles;
 
+import lombok.EqualsAndHashCode;
+import lombok.Setter;
+import lombok.ToString;
 import org.yoonchan.CSVPersister;
 import org.yoonchan.entities.Item;
 import org.yoonchan.Reporter;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Admin extends User implements Reporter, CSVPersister {
-    private static int nextId = 1;
+    @Setter private static int nextId = 1;
 
     // For CSV functionality
     public Admin(String id, String name, List<Item> borrowedItems) {
