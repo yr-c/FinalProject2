@@ -68,7 +68,16 @@ public abstract class User {
      * @param item The item to be returned.
      */
     public void returnItem(Item item) {
+        if (item == null) {
+            throw new InvalidItemException("Invalid item. Input is null.");
+        }
 
+        if (!this.getBorrowedItems().contains(item)) {
+            throw new InvalidItemException("Invalid item. Item is not in user's borrowedItems list.");
+        }
+
+        this.getBorrowedItems().remove(item);
+        item.setStatus(Item.Status.AVAILABLE);
     }
 
     /**
