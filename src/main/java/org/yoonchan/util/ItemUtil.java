@@ -28,7 +28,7 @@ public class ItemUtil {
 
         if (!(code.startsWith("978") || code.startsWith("979"))) return false;
 
-        List<Integer> digits = new ArrayList<>(13);
+        List<Integer> digits = new ArrayList<>(standardCodeLenWithoutDashes);
         for (int i = 0; i < code.length(); i++) {
             char c = code.charAt(i);
             if (Character.isDigit(c)) {
@@ -42,11 +42,7 @@ public class ItemUtil {
         for (int i = 0; i < digits.size() - 1; i++) {
             int digit = digits.get(i);
 
-            if (i % 2 == 0) {
-                sum += digit;
-            } else {
-                sum += digit * 3;
-            }
+            sum += (i % 2 == 0) ? digit : digit * 3;
         }
 
         sum %= 10;
