@@ -3,12 +3,15 @@ package org.yoonchan;
 import org.yoonchan.entities.*;
 import org.yoonchan.roles.*;
 import org.yoonchan.util.Constants;
+import org.yoonchan.util.ItemUtil;
+import org.yoonchan.util.UserUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public interface CSVPersister {
@@ -17,7 +20,7 @@ public interface CSVPersister {
      * the CSV files {@code items.csv} and {@code users.csv}. Invokes both
      * loadItemsFromCSV and loadUsersFromCSV methods.
      */
-    default void loadAllFromCSV(){
+    default void loadAllFromCSV() {
         loadItemsFromCSV();
         loadUsersFromCSV();
     }
@@ -27,6 +30,7 @@ public interface CSVPersister {
      * the CSV file {@code items.csv}.
      */
     default void loadItemsFromCSV() {
+        Library.itemCatalogue.clear();
         File file = new File(Constants.ITEMS_CSV_PATH);
         int bookNum = 0;
         int dvdNum = 0;
@@ -41,32 +45,32 @@ public interface CSVPersister {
                 String title = elements[1];
                 Item.Status status = Item.Status.valueOf(elements[2]);
 
-                switch (elements[3]) {
-                    case "Book" -> {
-                        String isbn = elements[4];
-                        String author = elements[5];
-                        String genre = elements[6];
+                switch (id.charAt(0)) {
+                    case 'B' -> {
+                        String isbn = elements[3];
+                        String author = elements[4];
+                        String genre = elements[5];
 
-                        Item item = new Book(id, title, status, isbn, author, genre);
-                        Library.itemCatalogue.add(item);
+                        Item book = new Book(id, title, status, isbn, author, genre);
+                        Library.itemCatalogue.add(book);
                         bookNum++;
                     }
 
-                    case "DVD" -> {
-                        String publisher = elements[4];
-                        int issueNumber = Integer.parseInt(elements[5]);
+                    case 'M' -> {
+                        String publisher = elements[3];
+                        int issueNumber = Integer.parseInt(elements[4]);
 
-                        Item item = new DVD(id, title, status, publisher, issueNumber);
-                        Library.itemCatalogue.add(item);
+                        Item dvd = new DVD(id, title, status, publisher, issueNumber);
+                        Library.itemCatalogue.add(dvd);
                         dvdNum++;
                     }
 
-                    case "Magazine" -> {
-                        String director = elements[4];
-                        int durationMins = Integer.parseInt(elements[5]);
+                    case 'D' -> {
+                        String director = elements[3];
+                        int durationMins = Integer.parseInt(elements[4]);
 
-                        Item item = new Magazine(id, title, status, director, durationMins);
-                        Library.itemCatalogue.add(item);
+                        Item magazine = new Magazine(id, title, status, director, durationMins);
+                        Library.itemCatalogue.add(magazine);
                         dvdNum++;
                     }
 
@@ -78,6 +82,8 @@ public interface CSVPersister {
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e);
         }
 
         Book.setNextId(bookNum + 1);
@@ -90,8 +96,95 @@ public interface CSVPersister {
      * the CSV file {@code users.csv}.
      */
     default void loadUsersFromCSV() {
+        Library.registeredUsers.clear();
         File file = new File(Constants.USERS_CSV_PATH);
 
+        int adminNum = 0;
+        int studentNum = 0;
+        int teacherNum = 0;
+
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNext()) {
+                String line = scanner.nextLine();
+                String[] elements = UserUtil.splitUserCSVData(line);
+
+                String id = elements[0];
+                String name = elements[1];
+
+                // Splitting the long String into bits of Item
+                String borrowedItemsString = elements[2];
+                String strippedBorrowedItemsString =
+                        borrowedItemsString.replace("[", "").replace("]", "");
+                String[] itemStrings = strippedBorrowedItemsString.split(";");
+
+                List<Item> borrowedItems = new ArrayList<>();
+                for (String itemString : itemStrings) {
+                    String[] itemData = itemString.split(",");
+                    String itemId = itemData[0];
+                    String itemTitle = itemData[1];
+                    Item.Status itemStatus = Item.Status.valueOf(itemData[2]);
+
+                    switch (itemId.charAt(0)) {
+                        case 'B' -> {
+                            String isbn = itemData[3];
+                            String author = itemData[4];
+                            String genre = itemData[5];
+
+                            borrowedItems.add(new Book(itemId, itemTitle, itemStatus, isbn, author, genre));
+                        }
+
+                        case 'M' -> {
+                            String publisher = itemData[3];
+                            int issueNumber = Integer.parseInt(itemData[4]);
+
+                            borrowedItems.add(new DVD(itemId, itemTitle, itemStatus, publisher, issueNumber));
+                        }
+
+                        case 'D' -> {
+                            String director = itemData[3];
+                            int durationMins = Integer.parseInt(itemData[4]);
+
+                            borrowedItems.add(new Magazine(itemId, itemTitle, itemStatus, director, durationMins));
+                        }
+
+                        default -> {
+                            System.out.println("CRITICAL: Malformed data at line: " + line + "\n(Unexpected ID header)");
+                            throw new RuntimeException();
+                        }
+                    }
+                }
+
+                switch (id.charAt(0)) {
+                    case 'A' -> {
+                        Library.registeredUsers.add(new Admin(id, name, borrowedItems));
+                        adminNum++;
+                    }
+
+                    case 'S' -> {
+                        Library.registeredUsers.add(new Student(id, name, borrowedItems));
+                        studentNum++;
+                    }
+
+                    case 'T' -> {
+                        Library.registeredUsers.add(new Teacher(id, name, borrowedItems));
+                        studentNum++;
+                    }
+
+                    default -> {
+                        System.out.println("CRITICAL: Malformed data at line: " + line + "\n(Unexpected ID header)");
+                        throw new RuntimeException();
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e);
+        }
+
+        Admin.setNextId(adminNum + 1);
+        Student.setNextId(studentNum + 1);
+        Teacher.setNextId(teacherNum + 1);
     }
 
     /**
@@ -111,43 +204,15 @@ public interface CSVPersister {
     default void saveItemsToCSV() {
         File file = new File(Constants.ITEMS_CSV_PATH);
 
-        try (FileWriter fileWriter = new FileWriter(file)) {
+        try (FileWriter fileWriter = new FileWriter(file, false)) {
             for (Item item : Library.itemCatalogue) {
-                String[] data = new String[7];
-                data[0] = item.getId();
-                data[1] = item.getTitle();
-                data[2] = item.getStatus().toString();
-
-                switch (item) {
-                    case Book book -> {
-                        data[3] = "Book";
-                        data[4] = book.getISBN();
-                        data[5] = book.getAuthor();
-                        data[6] = book.getGenre();
-                    }
-
-                    case DVD dvd -> {
-                        data[3] = "DVD";
-                        data[4] = dvd.getPublisher();
-                        data[5] = dvd.getIssueNumber() + "";
-                        data[6] = "";
-                    }
-
-                    case Magazine magazine -> {
-                        data[3] = "Magazine";
-                        data[4] = magazine.getDirector();
-                        data[5] = magazine.getDurationMins() + "";
-                        data[6] = "";
-                    }
-
-                    default -> Arrays.fill(data, "");
-                }
-
-                fileWriter.write(String.format("%s,%s,%s,%s,%s,%s,%s\n",
-                        data[0], data[1], data[2], data[3], data[4], data[5], data[6]));
+                fileWriter.write(ItemUtil.itemDataToCSVString(item));
             }
+
         } catch (IOException e) {
             throw new RuntimeException();
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -160,32 +225,13 @@ public interface CSVPersister {
 
         try (FileWriter fileWriter = new FileWriter(file, false)) {
             for (User user : Library.registeredUsers) {
-                String[] data = new String[4];
-                data[0] = user.getId();
-                data[1] = user.getName();
-                data[2] = user.getBorrowedItems().toString();
-
-                switch (user) {
-                    case Admin admin -> {
-                        data[3] = "Admin";
-                    }
-
-                    case Student student -> {
-                        data[3] = "Student";
-                    }
-
-                    case Teacher teacher -> {
-                        data[3] = "Teacher";
-                    }
-
-                    default -> Arrays.fill(data, "");
-                }
-
-                fileWriter.write(String.format("%s,%s,%s,%s\n",
-                        data[0], data[1], data[2], data[3]));
+                fileWriter.write(UserUtil.userDataToCSVString(user));
             }
+
         } catch (IOException e) {
             throw new RuntimeException();
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
         }
     }
 }
