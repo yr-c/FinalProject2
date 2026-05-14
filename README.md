@@ -13,3 +13,23 @@ types of users and items. It incorporates data loading/saving using CSV files an
 - Users may borrow available items and return them to the library. Doing so will set the item as "borrowed".
 - Admin users or a system admin may save and load data to CSV files.
 - Admin users or a system admin may generate a report of all users and items in the library.
+
+## Project structure:
+*Check resources directory for UML class diagram.*
+```
+src/main/java/org.yoonchan
+    entities/ Book, DVD, Item, Magazine
+    roles/ Admin, CSVPersister, InvalidItemException, ItemRegistrar, 
+        MaximumBorrowsReachedException, Reporter, Student, Teacher, User, UserRegistrar
+    util/ Constants, ItemUtil, UserUtil
+    Library, Main
+    
+src/main/recources
+    FinalProject2_UML.png, items.csv, users.csv
+    
+src/test/java
+    ItemComparatorTest, ItemUtilTest, UserComparatorTest, UserUtilTest
+```
+
+## Unit testing 
+Use of JUnit 6 for unit tests. 
