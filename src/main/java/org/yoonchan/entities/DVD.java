@@ -11,14 +11,14 @@ import lombok.ToString;
 @Setter
 public class DVD extends Item {
     @Setter private static int nextId = 1;
-    private String publisher;
-    private int issueNumber;
+    private String director;
+    private int durationMins;
 
     // For CSV functionality
-    public DVD(String id, String title, Status status, String publisher, int issueNumber) {
+    public DVD(String id, String title, Status status, String director, int durationMins) {
         super(id, title, status);
-        this.publisher = publisher;
-        this.issueNumber = issueNumber;
+        this.director = director;
+        this.durationMins = durationMins;
     }
 
     public DVD(String title) {

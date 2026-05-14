@@ -11,14 +11,14 @@ import lombok.ToString;
 @Setter
 public class Magazine extends Item {
     @Setter private static int nextId = 1;
-    private String director;
-    private int durationMins;
+    private String publisher;
+    private int issueNumber;
 
     // For CSV functionality
-    public Magazine(String id, String title, Status status, String director, int durationMins) {
+    public Magazine(String id, String title, Status status, String publisher, int issueNumber) {
         super(id, title, status);
-        this.director = director;
-        this.durationMins = durationMins;
+        this.publisher = publisher;
+        this.issueNumber = issueNumber;
     }
 
     public Magazine(String title) {

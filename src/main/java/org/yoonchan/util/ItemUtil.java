@@ -79,13 +79,13 @@ public class ItemUtil {
             }
 
             case DVD dvd -> {
-                sb.append(dvd.getPublisher()).append(",");
-                sb.append(dvd.getIssueNumber());
+                sb.append(dvd.getDirector()).append(",");
+                sb.append(dvd.getDurationMins());
             }
 
             case Magazine magazine -> {
-                sb.append(magazine.getDirector()).append(",");
-                sb.append(magazine.getDurationMins());
+                sb.append(magazine.getPublisher()).append(",");
+                sb.append(magazine.getIssueNumber());
             }
 
             default -> throw new IllegalArgumentException();
