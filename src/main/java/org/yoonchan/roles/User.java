@@ -189,13 +189,17 @@ public abstract class User {
     }
 
     /**
-     * Compares Users ascendingly by id, then by name, then by the number of borrowed items as a failsafe.
+     * Compares Users ascendingly by id, then by name, then by the number of borrowed items.
      */
     public static class UserIdComparator implements Comparator<User> {
         @Override
         public int compare(User o1, User o2) {
-            int idDifference = Integer.compare(Integer.parseInt(o1.id), Integer.parseInt(o2.id));
+            int id1 = Integer.parseInt(o1.id.substring(1));
+            int id2 = Integer.parseInt(o2.id.substring(1));
+            int idDifference = Integer.compare(id1, id2);
+
             int nameDifference = o1.name.compareTo(o2.name);
+
             int borrowedItemsDifference = Integer.compare(o1.borrowedItems.size(), o2.borrowedItems.size());
 
             if (idDifference == 0) {
@@ -212,8 +216,12 @@ public abstract class User {
     public static class UserNameComparator implements Comparator<User> {
         @Override
         public int compare(User o1, User o2) {
-            int idDifference = Integer.compare(Integer.parseInt(o1.id), Integer.parseInt(o2.id));
+            int id1 = Integer.parseInt(o1.id.substring(1));
+            int id2 = Integer.parseInt(o2.id.substring(1));
+            int idDifference = Integer.compare(id1, id2);
+
             int nameDifference = o1.name.compareTo(o2.name);
+
             int borrowedItemsDifference = Integer.compare(o1.borrowedItems.size(), o2.borrowedItems.size());
 
             if (nameDifference == 0) {
