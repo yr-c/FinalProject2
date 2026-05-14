@@ -35,6 +35,6 @@ src/test/java
 Use of JUnit 6 for unit tests. 
 
 ## Final report
-You can find the full report in 
-[this](https://docs.google.com/document/d/1UQWHKPYBgKEEdD7Qb8X5phi4_tnfHNPCC4CegD8RnBE/edit?usp=sharing)
-Google Docs.
+You can find the document of the full report 
+[here](https://docs.google.com/document/d/1vCBuGHjqGuNJDdRzjjrTWdyMopEZHXLWhMwv0sdSIeI/edit?usp=sharing), and the user guide 
+[here](https://docs.google.com/document/d/1UQWHKPYBgKEEdD7Qb8X5phi4_tnfHNPCC4CegD8RnBE/edit?usp=sharing).
