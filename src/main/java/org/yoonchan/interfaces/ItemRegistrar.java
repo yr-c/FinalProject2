@@ -1,4 +1,4 @@
-package org.yoonchan.roles;
+package org.yoonchan.interfaces;
 
 import org.yoonchan.Library;
 import org.yoonchan.entities.Item;

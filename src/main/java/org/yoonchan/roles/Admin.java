@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import lombok.ToString;
 import org.yoonchan.entities.Item;
+import org.yoonchan.interfaces.*;
 
 import java.util.List;
 

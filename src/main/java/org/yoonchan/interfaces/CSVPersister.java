@@ -1,7 +1,11 @@
-package org.yoonchan.roles;
+package org.yoonchan.interfaces;
 
 import org.yoonchan.Library;
 import org.yoonchan.entities.*;
+import org.yoonchan.roles.Admin;
+import org.yoonchan.roles.Student;
+import org.yoonchan.roles.Teacher;
+import org.yoonchan.roles.User;
 import org.yoonchan.util.Constants;
 import org.yoonchan.util.ItemUtil;
 import org.yoonchan.util.UserUtil;
