@@ -225,6 +225,7 @@ public interface CSVPersister {
 
         try (FileWriter fileWriter = new FileWriter(file, false)) {
             for (User user : Library.registeredUsers) {
+                if (user.getName().equalsIgnoreCase("system")) continue; // Ignore saving system admins
                 fileWriter.write(UserUtil.userDataToCSVString(user));
             }
 
