@@ -2,11 +2,13 @@ package org.yoonchan.roles;
 
 import lombok.*;
 import org.yoonchan.Library;
+import org.yoonchan.entities.Book;
+import org.yoonchan.entities.DVD;
 import org.yoonchan.entities.Item;
+import org.yoonchan.entities.Magazine;
 import org.yoonchan.util.Constants;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -99,6 +101,37 @@ public abstract class User {
      * @return Whether the search found a match for the item.
      */
     public boolean searchItemStream(String keyword) {
-        return false;
+        if (keyword == null || keyword.isEmpty()) return false;
+
+        String finalKeyword = keyword.toLowerCase();
+
+        Set<String> seenKeys = new HashSet<>();
+
+        List<Item> results = Library.itemCatalogue.stream()
+                .filter(item -> {
+                    boolean titleMatch = item.getTitle().toLowerCase().contains(finalKeyword);
+
+                    boolean specificMatch = switch (item) {
+                        case Book book -> book.getAuthor().toLowerCase().contains(finalKeyword);
+                        case DVD dvd -> dvd.getDirector().toLowerCase().contains(finalKeyword);
+                        case Magazine magazine -> magazine.getPublisher().toLowerCase().contains(finalKeyword);
+                        default -> false;
+                    };
+
+                    return titleMatch || specificMatch;
+                })
+                .filter(item -> {
+                    String uniqueKey = switch (item) {
+                        case Book book -> book.getTitle() + "|" + book.getAuthor();
+                        case DVD dvd -> dvd.getTitle() + "|" + dvd.getDirector();
+                        case Magazine magazine -> magazine.getTitle() + "|" + magazine.getPublisher();
+                        default -> item.getTitle();
+                    };
+                    return seenKeys.add(uniqueKey.toLowerCase());
+                })
+                .toList();
+
+        System.out.println("Found matches: \n" + results);
+        return !results.isEmpty();
     }
 }
