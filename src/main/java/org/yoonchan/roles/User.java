@@ -2,10 +2,7 @@ package org.yoonchan.roles;
 
 import lombok.*;
 import org.yoonchan.Library;
-import org.yoonchan.entities.Book;
-import org.yoonchan.entities.DVD;
-import org.yoonchan.entities.Item;
-import org.yoonchan.entities.Magazine;
+import org.yoonchan.entities.*;
 import org.yoonchan.util.Constants;
 
 import java.util.*;
@@ -34,13 +31,15 @@ public abstract class User {
     /**
      * Adds an item to the User's borrowedItems list.
      * @param item The item to be borrowed.
-     * @throws InvalidItemException If the invoked Item to borrow is null or not in the Library's itemCatalogue.
-     * @throws MaximumBorrowsReachedException If the User has reached his maximum borrows.
+     * @throws InvalidItemException If the invoked Item to borrow is not in the Library's itemCatalogue.
+     * @throws MaximumBorrowsReachedException If the callee user has reached his maximum borrows.
+     * @throws NullPointerException If the invoked Item is null.
+     * @throws UnregisteredUserException If the callee user is not in the Library's registeredUsers.
      */
-    public void borrowItem(Item item) throws InvalidItemException, MaximumBorrowsReachedException {
-        if (item == null) {
-            throw new InvalidItemException("Invalid item. Input is null.");
-        }
+    public void borrowItem(Item item) throws InvalidItemException, MaximumBorrowsReachedException, NullPointerException, UnregisteredUserException {
+        if (!(Library.registeredUsers.contains(this))) throw new UnregisteredUserException();
+
+        if (item == null) throw new NullPointerException("Invalid item. Input is null.");
 
         if (!Library.itemCatalogue.contains(item)) {
             throw new InvalidItemException("Invalid item. Item not found in Library's itemCatalogue.");
@@ -68,10 +67,15 @@ public abstract class User {
      * Returns an item to the Library from the User's borrowedItems list. Adds that same item from the Library's
      * itemCatalogue.
      * @param item The item to be returned.
+     * @throws InvalidItemException If the invoked Item is not in user's borrowedItems list.
+     * @throws NullPointerException If the invoked Item is null.
+     * @throws UnregisteredUserException If the callee user is not in the Library's registeredUsers.
      */
-    public void returnItem(Item item) {
+    public void returnItem(Item item) throws InvalidItemException, NullPointerException, UnregisteredUserException {
+        if (!(Library.registeredUsers.contains(this))) throw new UnregisteredUserException();
+
         if (item == null) {
-            throw new InvalidItemException("Invalid item. Input is null.");
+            throw new NullPointerException("Invalid item. Input is null.");
         }
 
         if (!this.getBorrowedItems().contains(item)) {
