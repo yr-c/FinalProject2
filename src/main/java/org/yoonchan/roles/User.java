@@ -189,7 +189,7 @@ public abstract class User {
     }
 
     /**
-     * Compares Users ascendingly by id, then by name, then by the number of borrowed items.
+     * Compares Users ascendingly by id, then by name, then by the number of borrowed items as a failsafe.
      */
     public static class UserIdComparator implements Comparator<User> {
         @Override
@@ -207,7 +207,7 @@ public abstract class User {
     }
 
     /**
-     * Compares Users ascendingly by name, then by id, then by the number of borrowed items.
+     * Compares Users ascendingly by name, then by the number of borrowed items, then by id.
      */
     public static class UserNameComparator implements Comparator<User> {
         @Override
@@ -217,7 +217,7 @@ public abstract class User {
             int borrowedItemsDifference = Integer.compare(o1.borrowedItems.size(), o2.borrowedItems.size());
 
             if (nameDifference == 0) {
-                return idDifference == 0 ? borrowedItemsDifference : idDifference;
+                return borrowedItemsDifference == 0 ? idDifference : borrowedItemsDifference;
             }
 
             return nameDifference;

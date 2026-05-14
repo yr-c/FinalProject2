@@ -24,8 +24,8 @@ public abstract class Item {
     }
 
     /**
-     * Compares Users ascendingly by id, then by title, then by Status. The Status ordering follows the natural
-     * ordering of the Status enum, which goes: AVAILABLE -> BORROWED -> LOST.
+     * Compares Users ascendingly by id, then by title, then by Status as a failsafe.
+     * The Status ordering follows the natural ordering of the Status enum, which goes: AVAILABLE -> BORROWED -> LOST.
      */
     public static class ItemIdComparator implements Comparator<Item> {
         @Override
@@ -44,7 +44,7 @@ public abstract class Item {
     }
 
     /**
-     * Compares Users ascendingly by title, then by id, then by Status. The Status ordering follows the natural
+     * Compares Users ascendingly by title, then by Status, then by id. The Status ordering follows the natural
      * ordering of the Status enum, which goes: AVAILABLE -> BORROWED -> LOST.
      */
     public static class ItemTitleComparator implements Comparator<Item> {
@@ -57,7 +57,7 @@ public abstract class Item {
             int statusDifference = naturalOrderComparator.compare(o1.status, o2.status);
 
             if (titleDifference == 0) {
-                return idDifference == 0 ? statusDifference : idDifference;
+                return statusDifference == 0 ? idDifference : statusDifference;
             }
             return titleDifference;
         }
