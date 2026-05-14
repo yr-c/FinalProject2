@@ -96,7 +96,7 @@ public abstract class User {
         List<Item> results = new ArrayList<>();
 
         // Start recursion at index 0, this will also print the result
-        searchHelper(Library.itemCatalogue, 0, keyword.toLowerCase(), seenMatches, results);
+        recursiveSearchHelper(Library.itemCatalogue, 0, keyword.toLowerCase(), seenMatches, results);
 
         return !results.isEmpty();
     }
@@ -110,7 +110,7 @@ public abstract class User {
      * @param seenMatches An initialized set of seen matches.
      * @param results An initialized list of results.
      */
-    private void searchHelper(List<Item> items, int index, String keyword, Set<String> seenMatches, List<Item> results) {
+    private void recursiveSearchHelper(List<Item> items, int index, String keyword, Set<String> seenMatches, List<Item> results) {
         if (index >= items.size()) {
             System.out.println("Found matches: \n" + results);
             return;
@@ -143,7 +143,7 @@ public abstract class User {
         }
 
         // RECURSIVE STEP: Call the method again for the next index
-        searchHelper(items, index + 1, keyword, seenMatches, results);
+        recursiveSearchHelper(items, index + 1, keyword, seenMatches, results);
     }
 
     /**
