@@ -14,7 +14,7 @@ types of users and items. It incorporates data loading/saving using CSV files an
 - Admin users or a system admin may save and load data to CSV files.
 - Admin users or a system admin may generate a report of all users and items in the library.
 
-## Project structure:
+## Project structure
 *Check resources directory for UML class diagram.*
 ```
 src/main/java/org.yoonchan
@@ -33,3 +33,8 @@ src/test/java
 
 ## Unit testing 
 Use of JUnit 6 for unit tests. 
+
+## Final report
+You can find the full report in 
+[this](https://docs.google.com/document/d/1UQWHKPYBgKEEdD7Qb8X5phi4_tnfHNPCC4CegD8RnBE/edit?usp=sharing)
+Google Docs.
