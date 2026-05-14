@@ -62,8 +62,8 @@ public class ItemUtil {
      * @return The processed String.
      * @throws IllegalArgumentException If the input user is null or has item of unexpected type.
      */
-    public static String itemDataToCSVString(Item item) throws IllegalArgumentException {
-        if (item == null) throw new IllegalArgumentException();
+    public static String itemDataToCSVString(Item item) throws IllegalArgumentException, NullPointerException {
+        if (item == null) throw new NullPointerException();
 
         StringBuilder sb = new StringBuilder();
 

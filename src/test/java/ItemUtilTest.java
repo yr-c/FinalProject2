@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.yoonchan.entities.Book;
+import org.yoonchan.entities.Item;
 import org.yoonchan.util.ItemUtil;
 
 public class ItemUtilTest {
@@ -59,5 +61,25 @@ public class ItemUtilTest {
         boolean actual = ItemUtil.isIsbnValid(input);
 
         Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("testItemDataToCSVString1: new Book(\"Rainbow Six\", \"9780425170342\", \"Tom Clancy\", \"Action\")" +
+            "->" +
+            "B1,Rainbow Six,AVAILABLE,9780425170342,Tom Clancy,Action")
+    void testSplitUserCSVData1() {
+        Item input = new Book("BX", "Rainbow Six", Item.Status.AVAILABLE, "9780425170342", "Tom Clancy", "Action");
+        String expected = "BX,Rainbow Six,AVAILABLE,9780425170342,Tom Clancy,Action\n";
+        String actual = ItemUtil.itemDataToCSVString(input);
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("testItemDataToCSVString2: null -> NullPointerException")
+    void testSplitUserCSVData2() {
+        Item input = null;
+        Assertions.assertThrows(NullPointerException.class, () ->
+                ItemUtil.itemDataToCSVString(input));
     }
 }
