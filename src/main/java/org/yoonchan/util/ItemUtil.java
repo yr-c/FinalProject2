@@ -1,5 +1,10 @@
 package org.yoonchan.util;
 
+import org.yoonchan.entities.Book;
+import org.yoonchan.entities.DVD;
+import org.yoonchan.entities.Item;
+import org.yoonchan.entities.Magazine;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,5 +54,43 @@ public class ItemUtil {
         int givenCheckDigit = digits.getLast();
 
         return expectedCheckDigit == givenCheckDigit;
+    }
+
+    /**
+     * A stateless helper method to convert user data into an easily parseable single String.
+     * @param item The user from which the data is processed.
+     * @return The processed String.
+     * @throws IllegalArgumentException If the input user is null or has item of unexpected type.
+     */
+    public static String itemDataToCSVString(Item item) throws IllegalArgumentException {
+        if (item == null) throw new IllegalArgumentException();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(item.getId()).append(",");
+        sb.append(item.getTitle()).append(",");
+        sb.append(item.getStatus()).append(",");
+
+        switch (item) {
+            case Book book -> {
+                sb.append(book.getIsbn()).append(",");
+                sb.append(book.getAuthor()).append(",");
+                sb.append(book.getGenre());
+            }
+
+            case DVD dvd -> {
+                sb.append(dvd.getPublisher()).append(",");
+                sb.append(dvd.getIssueNumber());
+            }
+
+            case Magazine magazine -> {
+                sb.append(magazine.getDirector()).append(",");
+                sb.append(magazine.getDurationMins());
+            }
+
+            default -> throw new IllegalArgumentException();
+        }
+
+        return sb.append("\n").toString();
     }
 }
