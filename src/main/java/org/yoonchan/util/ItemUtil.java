@@ -18,8 +18,9 @@ public class ItemUtil {
      * the digits 978 or 979, and contain exactly 13 digits.
      * @param code The input code String.
      * @return Whether the ISBN is valid.
+     * @throws NullPointerException If the input code is null.
      */
-    public static boolean isIsbnValid(String code) {
+    public static boolean isIsbnValid(String code) throws NullPointerException {
         if (code == null) throw new NullPointerException("Input ISBN code is null.");
 
         int standardCodeLenWithoutDashes = 13;
@@ -60,7 +61,8 @@ public class ItemUtil {
      * A stateless helper method to convert user data into an easily parseable single String.
      * @param item The user from which the data is processed.
      * @return The processed String.
-     * @throws IllegalArgumentException If the input user is null or has item of unexpected type.
+     * @throws IllegalArgumentException If the input item is of an unexpected type.
+     * @throws NullPointerException If the input item is null.
      */
     public static String itemDataToCSVString(Item item) throws IllegalArgumentException, NullPointerException {
         if (item == null) throw new NullPointerException();
