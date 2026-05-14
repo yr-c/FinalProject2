@@ -23,6 +23,11 @@ public class Admin extends User implements Reporter, CSVPersister {
         super(String.format("A%05d", nextId++), name);
     }
 
+    @Override
+    public int getMaximumBorrowAmount() {
+        return Integer.MAX_VALUE; // Unlimited for Admins
+    }
+
     /**
      * Generates a report of all borrowed/in-store/lost Items from the Library's itemCatalogue.
      * Prints out a formatted list of each item, its type, and its status.
