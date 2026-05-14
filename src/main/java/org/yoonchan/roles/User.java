@@ -189,7 +189,7 @@ public abstract class User {
     }
 
     /**
-     * Compares Users by id ascendingly, then by name, then by the number of borrowed items.
+     * Compares Users ascendingly by id, then by name, then by the number of borrowed items.
      */
     public static class UserIdComparator implements Comparator<User> {
         @Override
@@ -207,7 +207,7 @@ public abstract class User {
     }
 
     /**
-     * Compares Users by name ascendingly, then by id, then by the number of borrowed items.
+     * Compares Users ascendingly by name, then by id, then by the number of borrowed items.
      */
     public static class UserNameComparator implements Comparator<User> {
         @Override
