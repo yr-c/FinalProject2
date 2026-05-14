@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.yoonchan.util.ItemUtil;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -25,6 +26,8 @@ public class Book extends Item {
 
     public Book(String title, String isbn, String author, String genre) {
         super(String.format("B%07d", nextId++), title);
+
+        if (!ItemUtil.isIsbnValid(isbn)) throw new IllegalArgumentException("Invalid ISBN.");
         this.isbn = isbn;
         this.author = author;
         this.genre = genre;
