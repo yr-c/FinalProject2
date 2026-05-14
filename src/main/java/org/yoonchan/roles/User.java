@@ -187,4 +187,40 @@ public abstract class User {
         System.out.println("Found matches: \n" + results);
         return !results.isEmpty();
     }
+
+    /**
+     * Compares Users by id ascendingly, then by name, then by the number of borrowed items.
+     */
+    public static class UserIdComparator implements Comparator<User> {
+        @Override
+        public int compare(User o1, User o2) {
+            int idDifference = Integer.compare(Integer.parseInt(o1.id), Integer.parseInt(o2.id));
+            int nameDifference = o1.name.compareTo(o2.name);
+            int borrowedItemsDifference = Integer.compare(o1.borrowedItems.size(), o2.borrowedItems.size());
+
+            if (idDifference == 0) {
+                return nameDifference == 0 ? borrowedItemsDifference : nameDifference;
+            }
+
+            return idDifference;
+        }
+    }
+
+    /**
+     * Compares Users by name ascendingly, then by id, then by the number of borrowed items.
+     */
+    public static class UserNameComparator implements Comparator<User> {
+        @Override
+        public int compare(User o1, User o2) {
+            int idDifference = Integer.compare(Integer.parseInt(o1.id), Integer.parseInt(o2.id));
+            int nameDifference = o1.name.compareTo(o2.name);
+            int borrowedItemsDifference = Integer.compare(o1.borrowedItems.size(), o2.borrowedItems.size());
+
+            if (nameDifference == 0) {
+                return idDifference == 0 ? borrowedItemsDifference : idDifference;
+            }
+
+            return nameDifference;
+        }
+    }
 }
