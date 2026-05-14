@@ -21,7 +21,9 @@ public class DVD extends Item {
         this.durationMins = durationMins;
     }
 
-    public DVD(String title) {
+    public DVD(String title, String director, int durationMins) {
         super(String.format("D%07d", nextId++), title);
+        this.director = director;
+        this.durationMins = durationMins;
     }
 }

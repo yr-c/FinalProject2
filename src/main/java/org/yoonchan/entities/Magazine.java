@@ -21,7 +21,9 @@ public class Magazine extends Item {
         this.issueNumber = issueNumber;
     }
 
-    public Magazine(String title) {
+    public Magazine(String title, String publisher, int issueNumber) {
         super(String.format("M%07d", nextId++), title);
+        this.publisher = publisher;
+        this.issueNumber = issueNumber;
     }
 }
